@@ -2,50 +2,61 @@ import { useContext } from "react"
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../provider/AuthProvider";
-
+import axios from 'axios';
 
 export const SocialLogin = () => {
-    const { googleSignIn } = useContext(AuthContext);
+    const { user, googleSignIn } = useContext(AuthContext);
     const navigate = useNavigate()
 
     const goggleHandler = () => {
         googleSignIn()
-            .then((result) => {
-                console.log(result)
-                .then(result => {
-                    const signInUser = result.user;
-                    if (signInUser) {
-                      toast.dismiss()
-                      toast.success('Welcome your account!', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
+            .then(result => {
+                const signInUser = result.user;
+                if (signInUser) {
+                    // Make the POST request using Axiost
+                    const postUserData = { user_name: user?.displayName, user_email: user?.email, user_photo: user?.photoURL }
+                    axios.post(`http://localhost:3000/users`, postUserData)
+                        .then(response => {
+                            // Handle the successful response here
+                            console.log('POST request was successful', response.data);
+                            if (response.data.insertedId) {
+                                toast.dismiss()
+                                toast.success('Welcome your account!', {
+                                    position: "top-right",
+                                    autoClose: 5000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                    theme: "light",
+                                });
+                                navigate('/')
+                            }
+                        })
+                        .catch(error => {
+                            // Handle any errors that occurred during the POST request
+                            console.error('Error making POST request', error);
                         });
-                      navigate('/')
-                    }
-                  })
-                  .catch(error => {
-                    console.log(error)
-                    toast.dismiss()
-                    toast.warn('something went wrong!', {
-                      position: "top-right",
-                      autoClose: 5000,
-                      hideProgressBar: false,
-                      closeOnClick: true,
-                      pauseOnHover: true,
-                      draggable: true,
-                      progress: undefined,
-                      theme: "light",
-                      });
-                  });
+                }
             })
+            .catch(error => {
+                console.log(error)
+                toast.dismiss()
+                toast.warn('something went wrong!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            });
+
     }
-  
+
     return (
         <div className="flex gap-5 items-center justify-center my-5 md:mx-10">
             <div onClick={goggleHandler} className="md:w-[110px] flex items-center justify-between border rounded-md px-2 py-1 bg-gray-200 hover:bg-gray-50">

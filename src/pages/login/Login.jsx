@@ -69,7 +69,7 @@ export const Login = () => {
   return (
     <>
       <div className="flex flex-col items-center justify-center w-full h-screen bg-gray-50">
-        <h1 className="text-blue-500 text-2xl my-5 font-semibold">Login to Your Account!</h1>
+        <h1 className="text-gray-700 text-2xl my-5 font-semibold">Login to Your Account!</h1>
         <div className="w-full m-5 md:m-0 p-5 md:w-1/2 lg:w-[450px] border rounded-md bg-white">
           <Box
             component="form"
