@@ -38,7 +38,7 @@ export const TableRows = ({ row, refetch }) => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:3000/my-contacts/delete?id=${id}`, {
+                fetch(`https://contact-management-server-oviv6vv62-md-rijwan-jannat.vercel.app/my-contacts/delete?id=${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -58,6 +58,7 @@ export const TableRows = ({ row, refetch }) => {
 
 
     }
+    
     return (
         <tr className="hover">
             <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -119,7 +120,7 @@ export const TableRows = ({ row, refetch }) => {
             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap text-center">{number}</td>
             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap text-center">{email}</td>
             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap text-center">{date}</td>
-            <EditContacts isOpenModal={isOpenModal} closeModal={closeModal} _id={_id}/>
+            <EditContacts isOpenModal={isOpenModal} closeModal={closeModal} _id={_id} row={row} refetch={refetch}/>
         </tr>
     )
 }

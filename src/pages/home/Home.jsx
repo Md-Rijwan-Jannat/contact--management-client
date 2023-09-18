@@ -1,10 +1,10 @@
+
 import { Navbar } from "../../components/Navbar/Navbar";
 import { useContacts } from "../../components/hooks/useContacts";
 import { TableRows } from "./TableRows";
 
 export const Home = () => {
   const [contacts, refetch] = useContacts();
-  refetch();
   return (
 
     <>
@@ -57,7 +57,7 @@ export const Home = () => {
                       {
                         contacts.map(row => <TableRows
                           key={row._id}
-                          row={row} 
+                          row={row}
                           refetch={refetch}>
                         </TableRows>
                         )

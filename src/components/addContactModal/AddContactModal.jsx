@@ -28,7 +28,7 @@ export const AddContactModal = ({ isOpenModal, closeModal }) => {
                     const imgUrl = imageRes.data.display_url;
                     console.log(imgUrl)
                     const postContactData = { name: data?.name, email: data?.email, user_email:user?.email, image: imgUrl, spoc: data?.spoc, date: data?.date, number: data?.number }
-                    axios.post(`http://localhost:3000/contacts`, postContactData)
+                    axios.post(`https://contact-management-server-oviv6vv62-md-rijwan-jannat.vercel.app/contacts`, postContactData)
                         .then(response => {
                             // Handle the successful response here
                             console.log('POST request was successful', response.data);
